@@ -212,21 +212,208 @@
   .info-box .info-title { color: #777; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
   .info-box .highlight { color: #00ff88; }
   .info-box .note { margin-top: 10px; color: #444; font-size: 11px; }
+
+  /* LOGIN SCREEN */
+  #loginScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: #0a0a0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #loginScreen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  .login-box {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .login-lock {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: lockPulse 2s ease-in-out infinite;
+  }
+  @keyframes lockPulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,255,136,0.2)); }
+    50% { transform: scale(1.08); filter: drop-shadow(0 0 25px rgba(0,255,136,0.5)); }
+  }
+  .login-title {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #00ff88;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .login-sub {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #444;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+  }
+  .login-input-wrapper {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  #loginInput {
+    width: 280px;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 6px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  #loginInput:focus {
+    border-color: rgba(0,255,136,0.4);
+  }
+  #loginInput.shake {
+    animation: shake 0.5s ease;
+    border-color: #ff4444 !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-12px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-8px); }
+    80% { transform: translateX(6px); }
+  }
+  .login-btn {
+    width: 280px;
+    padding: 13px 0;
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.25);
+    border-radius: 10px;
+    color: #00ff88;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .login-btn:hover {
+    background: rgba(0,255,136,0.15);
+    border-color: rgba(0,255,136,0.5);
+  }
+  .login-error {
+    margin-top: 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #ff4444;
+    letter-spacing: 1px;
+    height: 16px;
+  }
+  .login-attempts {
+    margin-top: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #333;
+    letter-spacing: 1px;
+  }
+  #appContent { display: none; }
+  #appContent.visible { display: block; }
+
+  /* CELEBRATION */
+  #celebration {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    pointer-events: none;
+  }
+  #celebration.active {
+    display: flex;
+    animation: celebFadeIn 0.3s ease;
+  }
+  @keyframes celebFadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  #fireworksCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .celeb-text {
+    position: relative;
+    z-index: 1;
+    font-family: 'Courier New', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: #ff8844;
+    text-align: center;
+    text-shadow: 0 0 30px rgba(255,136,68,0.6), 0 0 60px rgba(255,136,68,0.3);
+    letter-spacing: 3px;
+    animation: celebPulse 1s ease-in-out infinite;
+    padding: 0 20px;
+  }
+  @keyframes celebPulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 30px rgba(255,136,68,0.6); }
+    50% { transform: scale(1.06); text-shadow: 0 0 50px rgba(255,136,68,0.9), 0 0 80px rgba(255,68,68,0.4); }
+  }
+  .celeb-heart {
+    font-size: 48px;
+    margin-top: 16px;
+    animation: heartBeat 0.8s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    40% { transform: scale(1); }
+    60% { transform: scale(1.15); }
+  }
 </style>
 </head>
 <body>
 
 <canvas id="matrix"></canvas>
 
-<div class="container">
-  <!-- Header -->
-  <div class="header">
-    <div class="header-badge">
-      <span class="icon">🔐</span>
-      <span class="title">Gizli Şifreleme Aracı</span>
+<!-- CELEBRATION OVERLAY -->
+<div id="celebration">
+  <canvas id="fireworksCanvas"></canvas>
+  <div class="celeb-text">İyi Ki Doğdun Sevgilim 💕</div>
+  <div class="celeb-heart">❤️</div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-lock">🔒</div>
+    <div class="login-title">Erişim Engelli</div>
+    <div class="login-sub">Devam etmek için şifreyi girin</div>
+    <div class="login-input-wrapper">
+      <input type="password" id="loginInput" placeholder="• • • • •" maxlength="20" />
     </div>
-    <p class="subtitle">Vigenère Şifreleme · Türkçe Alfabe Destekli</p>
+    <button class="login-btn" id="loginBtn">Giriş Yap</button>
+    <div class="login-error" id="loginError"></div>
+    <div class="login-attempts" id="loginAttempts"></div>
   </div>
+</div>
+
+<!-- APP CONTENT -->
+<div id="appContent">
+<div class="container">
+  <!-- Header removed -->
 
   <!-- Mode Toggle -->
   <div class="toggle-bar">
@@ -266,11 +453,12 @@
   </div>
 
   <!-- Info -->
-  <div class="info-box">
-    <div class="info-title">NASIL ÇALIŞIR?</div>
-    Bu araç <span class="highlight">Vigenère şifrelemesi</span> kullanır. Mesajdaki her harf, gizli anahtardaki karşılık gelen harfin alfabedeki sırası kadar kaydırılır. Anahtar mesajdan kısaysa tekrar eder. Doğru anahtar olmadan mesajı çözmek son derece zordur.
-    <div class="note">Türkçe alfabe (29 harf) · Büyük/küçük harf korunur · Boşluk ve noktalama aynen kalır</div>
+  <div class="info-box" style="text-align:center; font-style:italic; color:#aa8866; line-height:2.2; letter-spacing:0.5px; font-size:13px;">
+    Düşünceye dönüşse benim etim kemiğim<br>
+    Ben, tüm uzaklıkları aşıp erişeceğim<br>
+    Sınırsız ötelerden, senin olduğun yere.
   </div>
+</div>
 </div>
 
 <script>
@@ -359,6 +547,101 @@ function update() {
   currentResult = mode === "encrypt" ? encrypt(msg, key) : decrypt(msg, key);
   glitchReveal(rb, currentResult);
   cb.style.display = "inline-block";
+
+  // Trigger celebration on decrypt
+  if (mode === "decrypt") {
+    showCelebration();
+  }
+}
+
+// FIREWORKS
+let fireworksRunning = false;
+function showCelebration() {
+  const celeb = document.getElementById("celebration");
+  const canvas = document.getElementById("fireworksCanvas");
+  const ctx = canvas.getContext("2d");
+  celeb.classList.add("active");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const colors = ["#ff4444","#ff8844","#ffcc00","#ff66aa","#ff5555","#ffaa33","#ff77cc","#ffffff"];
+
+  function Particle(x, y, color) {
+    this.x = x; this.y = y;
+    this.color = color;
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 6 + 2;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    this.alpha = 1;
+    this.decay = Math.random() * 0.02 + 0.008;
+    this.size = Math.random() * 3 + 1.5;
+  }
+
+  function burst(x, y) {
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    for (let i = 0; i < 60; i++) {
+      particles.push(new Particle(x, y, color));
+    }
+  }
+
+  let frame = 0;
+  let burstCount = 0;
+
+  function animate() {
+    ctx.fillStyle = "rgba(10,10,15,0.15)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Random bursts
+    if (frame % 15 === 0 && burstCount < 20) {
+      burst(
+        Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
+        Math.random() * canvas.height * 0.6 + canvas.height * 0.1
+      );
+      burstCount++;
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.06; // gravity
+      p.alpha -= p.decay;
+      if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    frame++;
+    if (frame < 300) {
+      requestAnimationFrame(animate);
+    } else {
+      // Fade out
+      celeb.style.transition = "opacity 1s ease";
+      celeb.style.opacity = "0";
+      setTimeout(() => {
+        celeb.classList.remove("active");
+        celeb.style.opacity = "";
+        celeb.style.transition = "";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }, 1000);
+    }
+  }
+
+  // Reset if already running
+  particles.length = 0;
+  frame = 0;
+  burstCount = 0;
+  celeb.style.opacity = "";
+  animate();
 }
 
 function glitchReveal(el, text) {
@@ -408,7 +691,7 @@ function copyResult() {
   setInterval(() => {
     ctx.fillStyle = "rgba(10,10,15,0.06)";
     ctx.fillRect(0, 0, c.width, c.height);
-    ctx.fillStyle = "#00ff8855";
+    ctx.fillStyle = "#ff880055";
     ctx.font = "13px monospace";
     for (let i = 0; i < drops.length; i++) {
       ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * 16, drops[i] * 16);
@@ -416,6 +699,71 @@ function copyResult() {
       drops[i]++;
     }
   }, 60);
+})();
+
+// LOGIN SYSTEM
+(function() {
+  const SECRET = "muslu";
+  let attempts = 0;
+  const maxAttempts = 5;
+
+  const loginScreen = document.getElementById("loginScreen");
+  const loginInput = document.getElementById("loginInput");
+  const loginBtn = document.getElementById("loginBtn");
+  const loginError = document.getElementById("loginError");
+  const loginAttempts = document.getElementById("loginAttempts");
+  const appContent = document.getElementById("appContent");
+
+  function tryLogin() {
+    const val = loginInput.value.trim().toLowerCase();
+    if (!val) {
+      loginError.textContent = "Şifre boş olamaz.";
+      loginInput.classList.add("shake");
+      setTimeout(() => loginInput.classList.remove("shake"), 500);
+      return;
+    }
+    if (val === SECRET) {
+      // SUCCESS
+      loginScreen.classList.add("hidden");
+      appContent.classList.add("visible");
+      loginInput.value = "";
+    } else {
+      // FAIL
+      attempts++;
+      loginInput.value = "";
+      loginInput.classList.add("shake");
+      setTimeout(() => loginInput.classList.remove("shake"), 500);
+
+      if (attempts >= maxAttempts) {
+        loginError.textContent = "Çok fazla hatalı deneme!";
+        loginInput.disabled = true;
+        loginBtn.disabled = true;
+        loginBtn.style.opacity = "0.3";
+        loginBtn.style.cursor = "not-allowed";
+        loginAttempts.textContent = "Erişim geçici olarak engellendi.";
+        setTimeout(() => {
+          attempts = 0;
+          loginInput.disabled = false;
+          loginBtn.disabled = false;
+          loginBtn.style.opacity = "1";
+          loginBtn.style.cursor = "pointer";
+          loginError.textContent = "";
+          loginAttempts.textContent = "";
+        }, 30000);
+      } else {
+        loginError.textContent = "Yanlış şifre!";
+        loginAttempts.textContent = "Kalan deneme: " + (maxAttempts - attempts);
+      }
+    }
+  }
+
+  loginBtn.addEventListener("click", tryLogin);
+  loginInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") tryLogin();
+  });
+
+  // Auto-focus
+  loginInput.focus();
 })();
 </script>
 </body>
